@@ -1,0 +1,12 @@
+window.addEventListener("DOMContentLoaded",function(){
+	test("Should be able to add two numbers",function(){
+		//Arrange
+		var number1 = 10, number2 = 20, expectedResult = 30;
+
+		//Act
+		var result = sum(number1,number2);
+
+		//Assert
+		return result === expectedResult;
+	})
+})
