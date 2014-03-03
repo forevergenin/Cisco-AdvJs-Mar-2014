@@ -65,5 +65,26 @@ window.addEventListener("DOMContentLoaded",function(){
 		return result === expectedResult;
 	});
 	
+	test("Should be able to add a nested array of numbers",function(){
+		//Arrange
+		var numbers = [10,[20,[30]]];
+		var expectedResult = 60;
+		//Act
+		var result = sum(numbers);
 
+		//Assert
+		return result === expectedResult;
+	});
+
+	test("Should be able to add a array of functions returning nested array of numbers",function(){
+		//Arrange
+		var f1 = function(){ return [10,[20,[30]]]; };
+		var f2 = function(){ return [10,[20,[30]]]; };
+		var expectedResult = 120;
+		//Act
+		var result = sum([f1,[f2]]);
+
+		//Assert
+		return result === expectedResult;
+	});
 })

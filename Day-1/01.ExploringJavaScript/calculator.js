@@ -2,17 +2,9 @@ function sum(){
 	function parseArg(n){
 		if (!isNaN(n)) { return  parseInt(n); }
 		if (typeof n === "function") return parseArg(n());
-		if (n instanceof Array){
-			var result  = 0;
-			for(var i=0;i<n.length;i++)
-				result += parseArg(n[i]);
-			return result;
-		}
+		if (n instanceof Array) return sum.apply(this,n);
 		return  0;	
 	}
-	var result  = 0;
-	for(var i=0;i<arguments.length;i++)
-		result += parseArg(arguments[i]);
-	return result;
-	
+	return arguments.length <= 1 ? parseArg(arguments[0]) 
+		: parseArg(arguments[0]) + sum.apply(this,[].slice.call(arguments,1));
 }
