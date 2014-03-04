@@ -16,6 +16,7 @@
 		width: 300px;
 	}
 	</style>
+	<script src="jquery.js"></script>
 	<script>
 	function SalaryCalculator(){
 		var changeSubscribers = {};
@@ -63,86 +64,84 @@
 		}
 	}
 
-	(function(window,document){
-		var txtBasic, txtHra, txtDa, rangeTax, spanTax, btnCalculate, divSalary;
-		window.addEventListener("DOMContentLoaded",init);
+	function SalaryCalculatorView(rootElementId,model){
+		var salaryCalculator = model;
+		var rootElementId = rootElementId;
+		var that = this;
 
 		function onBasicChange(){
-			txtBasic.value = salaryCalculator.basic();
+			that.$root.find("#txtBasic").val(salaryCalculator.basic());
 		}
 
 		function onHraChange(){
-			txtHra.value = salaryCalculator.hra();
+			that.$root.find("#txtHra").val(salaryCalculator.hra())
 		}
 
 		function onDaChange(){
-			txtDa.value = salaryCalculator.da();
+			that.$root.find("#txtDa").val(salaryCalculator.da())
 		}
 
 		function onTaxChange(){
-			rangeTax.value = salaryCalculator.tax();
-			spanTax.innerHTML = salaryCalculator.tax();
+			that.$root.find("#rangeTax").val(salaryCalculator.tax())
+			that.$root.find("#spanTax").html(salaryCalculator.tax());
 		}
 
-		function init(){
-			window.salaryCalculator = new SalaryCalculator();
+		this.init = function(){
+
+			this.$root = $($(rootElementId).html());
+			
+
 			salaryCalculator.addOnChange("salary" , onSalaryChange);
 			salaryCalculator.addOnChange("basic" , onBasicChange);
 			salaryCalculator.addOnChange("hra" , onHraChange);
 			salaryCalculator.addOnChange("da" , onDaChange);
 			salaryCalculator.addOnChange("tax" , onTaxChange);
 
-			txtBasic = document.getElementById("txtBasic");
-			txtBasic.addEventListener("change",onTxtBasicChange);
+			this.$root.on("change","#txtBasic",onTxtBasicChange);
+			this.$root.on("change","#txtHra",onTxtHraChange);
+			this.$root.on("change","#txtDa",onTxtDaChange);
+			this.$root.on("change","#rangeTax",onRangeTaxChange);
+			this.$root.on("click","#btnCalculate",onBtnCalculateClick);
 
-			txtHra = document.getElementById("txtHra");
-			txtHra.addEventListener("change",onTxtHraChange);
-
-			txtDa = document.getElementById("txtDa");
-			txtDa.addEventListener("change",onTxtDaChange);
-
-			rangeTax = document.getElementById("rangeTax");
-			rangeTax.addEventListener("change",onRangeTaxChange);
-
-			spanTax = document.getElementById("spanTax");
-			btnCalculate = document.getElementById("btnCalculate");
-			divSalary = document.getElementById("divSalary");
-
-			btnCalculate.addEventListener("click",onBtnCalculateClick);
-			rangeTax.addEventListener("change",onRangeTaxChange);
+			//populate the defaults
+			this.$root.find("#txtBasic").val(salaryCalculator.basic());
+			this.$root.find("#txtHra").val(salaryCalculator.hra());
+			this.$root.find("#txtDa").val(salaryCalculator.da());
+			this.$root.find("#rangeTax").val(salaryCalculator.tax());
+			this.$root.find("#spanTax").html(salaryCalculator.tax());
+			
 		}
 		function onTxtBasicChange(){
-			salaryCalculator.basic(parseInt(txtBasic.value));
+			salaryCalculator.basic(parseInt(that.$root.find("#txtBasic").val()));
 		}
 
 		function onTxtHraChange(){
-			salaryCalculator.hra(parseInt(txtHra.value));
+			salaryCalculator.hra(parseInt(that.$root.find("#txtHra").val()));
 		}
 		function onTxtDaChange(){
-			salaryCalculator.da(parseInt(txtDa.value));
+			salaryCalculator.da(parseInt(that.$root.find("#txtDa").val()));
 		}
 		function onRangeTaxChange(){
-			salaryCalculator.tax(parseInt(rangeTax.value));
-			spanTax.innerHTML = rangeTax.value;
+			salaryCalculator.tax(parseInt(that.$root.find("#rangeTax").val()));
 		}
 		function onSalaryChange(){
-			divSalary.innerHTML = salaryCalculator.salary;
+			that.$root.find("#divSalary").html(salaryCalculator.salary);
 		}
 
 		function onBtnCalculateClick(){
 			salaryCalculator.calculate();
 		}
+	}
 
-		
-
-	})(window,document);
+	$(function(){
+		var calculator = new SalaryCalculator();
+		var calculatorView = new SalaryCalculatorView("#salaryCalculatorTemplate",calculator);
+		calculatorView.init();
+		$(document.body).append(calculatorView.$root);
+	});
 	</script>
-</head>
-<body>
-<h1>Salary Calculator</h1>
-<hr>
-	<div class="content">
-		<div><label for="txtBasic">Basic :</label><input type="text" name="" id="txtBasic"></div>
+	<script type="text/template" id="salaryCalculatorTemplate">
+	<div><label for="txtBasic">Basic :</label><input type="text" name="" id="txtBasic"></div>
 		<div><label for="txtHra">Hra :</label><input type="text" name="" id="txtHra"></div>
 		<div><label for="txtDa">Da :</label><input type="text" name="" id="txtDa"></div>
 		<div>
@@ -154,6 +153,13 @@
 		<div>
 			<div id="divSalary">[Salary]</div>
 		</div>	
+	</script>
+</head>
+<body>
+<h1>Salary Calculator</h1>
+<hr>
+	<div class="content">
+		
 	</div>
 	
 </body>
