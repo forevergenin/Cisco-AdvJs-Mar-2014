@@ -48,10 +48,17 @@
 		function triggerChangeSubscribers(attrName){
 			var changeSubscribersForAttr = changeSubscribers[attrName];
 			for(var i=0;i<changeSubscribersForAttr.length;i++)
-				changeSubscribersForAttr[i]();
+				(function(index){
+					setTimeout(function(){
+						changeSubscribersForAttr[index]();	
+					});	
+				})(i);
+				
+				
 		}
 		this.addOnChange = function(attrName, callback){
-			if (typeof changeSubscribers[attrName] === "undefined") changeSubscribers[attrName] = [];
+			if (typeof changeSubscribers[attrName] === "undefined") 
+				changeSubscribers[attrName] = [];
 			changeSubscribers[attrName].push(callback);
 		}
 	}
