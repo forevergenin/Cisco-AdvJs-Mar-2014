@@ -17,6 +17,50 @@ function sort(list){
     }
 }
 
+function sort(list,attrName){
+  for(var i=0;i<list.length-1;i++)
+   for(var j=i+1;j<list.length;j++)
+     if (list[i][attrName] > list[j][attrName]){
+       var temp = list[i];
+       list[i] = list[j];
+       list[j] = temp;
+    }
+}
+
+function sort(list,comparerFn){
+  for(var i=0;i<list.length-1;i++)
+   for(var j=i+1;j<list.length;j++)
+     if (comparerFn(list[i],list[j]) > 0){
+       var temp = list[i];
+       list[i] = list[j];
+       list[j] = temp;
+    }
+}
+
 sort(products) //products sorted by "id". hint : use selection sort
 
 console.table(products);
+
+var categories = [
+	{id : 1, name : "stationary"},
+	{id : 2, name : "grocery"}
+]
+
+
+function join(leftList,rightList,leftKeySelectorFn,rightKeySelectorFn,keyComparerFn,mergeFn){
+	var result = [];
+	for(var i=0;i<leftList.length;i++){
+		var leftKey = leftKeySelectorFn(leftList[i]);
+		for(var j=0;j<rightList.length;j++){
+			var rightKey = rightKeySelectorFn(rightList[j]);
+			if (keyComparerFn(leftKey,rightKey) == 0){
+				result.push(mergeFn(leftList[i],rightList[j]));
+			}
+		}
+	}
+	return result;
+}
+
+function groupBy(list,..){
+	
+}
