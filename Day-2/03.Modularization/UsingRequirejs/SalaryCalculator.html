@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Salary Calculator</title>
+	<link rel="stylesheet" href="styles/SalaryCalculator.css">
+	<script src="scripts/lib/require.js" data-main="scripts/app/app.js"></script>
+	
+	<script type="text/template" id="salaryCalculatorTemplate">
+	<div><label for="txtBasic">Basic :</label><input type="text" name="" id="txtBasic"></div>
+		<div><label for="txtHra">Hra :</label><input type="text" name="" id="txtHra"></div>
+		<div><label for="txtDa">Da :</label><input type="text" name="" id="txtDa"></div>
+		<div>
+			<label for="txtTax">Tax :</label>
+			<input type="range" name="" id="rangeTax" min="0" max="50">
+			<span id="spanTax">[Tax%]</span>
+		</div>
+		<div><input type="button" value="Calculate" id="btnCalculate"></div>
+		<div>
+			<div id="divSalary">[Salary]</div>
+		</div>	
+	</script>
+</head>
+<body>
+<h1>Salary Calculator</h1>
+<hr>
+	<div class="content">
+		
+	</div>
+	
+</body>
+</html>

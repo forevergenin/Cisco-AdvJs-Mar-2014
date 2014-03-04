@@ -1,0 +1,11 @@
+label {
+		display: block;
+	}
+	#divSalary{
+		color : red;
+		font-size: 28pt;
+		text-align: center;
+	}
+	.content{
+		width: 300px;
+	}
